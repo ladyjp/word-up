@@ -115,17 +115,19 @@ function render() {
 
     // TODO 2
     // Update the curent time remaining on the scoreboard.
-
+    $("#time-remaining").text(model.secondsRemaining);
 
     // if the game has not started yet, just hide the #game container and exit
     if (model.gameHasStarted == false) {
         $("#game").hide();
-        return;
+        return
     }
 
     // GAME -------------------------------------
 
     // clear stuff
+    $("#textbox").removeClass("bad-attempt").attr("disabled",false);
+    $(".disallowed-letter").remove();
     $("#allowed-letters").empty();
     $("#word-submissions").empty();
     // TODO 10
@@ -136,17 +138,21 @@ function render() {
     $("#game").show();
 
     // render the letter tiles
-    var letterChips = model.allowedLetters.map(letterChip)
+    var letterChips = model.allowedLetters.map(letterChip);
     $("#allowed-letters").append(letterChips);
 
+    var letterChips = model.allowedLetters.map(letterChip);
+    $("#allowed-letters").append(letterChips);
+    $("#word-submissions").append(model.wordSubmissions.map(wordSubmissionChip));
     // TODO 11
     // Render the word submissions
 
 
     // Set the value of the textbox
-    $("#textbox").val(model.currentAttempt);
+    $("#textbox").val(model.currentAttempt).focus();
     // TODO 3
     // Give focus to the textbox.
+   // $("#textbox").focus();
 
 
     // if the current word attempt contains disallowed letters,
@@ -157,18 +163,17 @@ function render() {
 
         // show the disallowed letters underneath
         var redLetterChips = disallowedLetters.map(disallowedLetterChip);
-
+        $("#word-attempt-form").append(redLetterChips)};
         // TODO 8
         // append the red letter chips to the form
-
     }
 
     // if the game is over
-    var gameOver = model.secondsRemaining <= 0
+    var gameOver = model.secondsRemaining <= 0;
     if (gameOver) {
-        // TODO 9
-        // disable the text box and clear its contents
-
+        $("#textbox").attr("disabled",true).val("")
+        
+        // TODO 9 disable the text box and clear its contents
     }
 }
 
@@ -238,6 +243,10 @@ $(document).ready(function() {
         render();
     });
 
+    $("#textbox").on("input",function() {
+        model.currentAttempt = $("#textbox").val();
+        render()
+    });
     // TODO 6
     // Add another event handler with a callback function.
     // When the textbox content changes,
@@ -277,10 +286,11 @@ var scrabblePointsForEachLetter = {
  * meaning it is not a member of the .allowedLetters list from the current model
  */
 function isDisallowedLetter(letter) {
+    return model.allowedLetters.indexOf(letter) ==-1
     // TODO 7
     // This should return true if the letter is not an element of
     // the .allowedLetters list in the model
-    return false;
+    //return false;
 }
 
 /**
