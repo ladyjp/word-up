@@ -111,8 +111,6 @@ function checkIfWordIsReal(word) {
 function render() {
 
     // PREGAME ---------------------------------
-
-    // update the score on the scoreboard
     $("#current-score").text(currentScore());
 
    
