@@ -70,17 +70,11 @@ function addNewWordSubmission(word) {
  * the corresponding wordSubmission in the model, and then re-renders.
  */
 function checkIfWordIsReal(word) {
-    var params = { 
-        api_key: "5ac16c04-53a6-4259-b177-06cfdaf79212", 
-        tag : word, 
-    };
-
-    var merriamUrl = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/";
-
+    
     $.ajax({
         
-        url: merriamUrl,
-        data: params,
+       // url: "https://www.dictionaryapi.com/api/v3/references/collegiate/json/"+word+"?key=5ac16c04-53a6-4259-b177-06cfdaf79212",
+       url: "http://api.pearson.com/v2/dictionaries/lasde/entries?headword="+word,
         success: function(response) {
             console.log("We received a response from Pearson!");
 
@@ -89,7 +83,7 @@ function checkIfWordIsReal(word) {
 
           
             var theAnswer = response.results.length>0;
-            model.wordSubmissions.forEach(function(submission){
+              model.wordSubmissions.forEach(function(submission){
                 if(submission.word===word)
                 {submission.isRealWord=theAnswer}});
            
@@ -337,7 +331,7 @@ function currentScore() {
     // a list of scores, one for each word submission
     var wordScores = model.wordSubmissions.map(function(submission) {
         if (submission.isRealWord) {
-            return wordScore(submission.word);
+            return wordScore(submission.word)
         }
         else {
             return 0;
@@ -345,7 +339,7 @@ function currentScore() {
     });
 
     return wordScores.reduce(add, 0)
-} 
+}; 
    
 
 
