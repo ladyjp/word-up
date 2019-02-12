@@ -315,8 +315,9 @@ function wordScore(word) {
     // split the word into a list of letters
     var letters = word.split("");
 
-    
-    var letterScores = [];
+    var letterScores=letters.map(letterScore);
+
+    //var letterScores = [];
 
     // return the total sum of the letter scores
     return letterScores.reduce(add, 0);
