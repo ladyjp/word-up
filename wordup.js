@@ -134,8 +134,7 @@ function render() {
     var letterChips = model.allowedLetters.map(letterChip);
     $("#allowed-letters").append(letterChips);
     $("#word-submissions").append(model.wordSubmissions.map(wordSubmissionChip));
-    // TODO 11
-    // Render the word submissions
+    
 
 
     // Set the value of the textbox
@@ -160,7 +159,7 @@ function render() {
     if (gameOver) {
         $("#textbox").attr("disabled",true).val("")
         
-        // TODO 9 disable the text box and clear its contents
+       
     }
 }
 
@@ -286,10 +285,7 @@ function containsOnlyAllowedLetters(word) {
     return disallowedLettersInWord(word).length==0
 }   
     
-    // TODO 12
-    // Return the actual answer.
-
-
+ 
 /**
  * Returns a list of 7 randomly chosen letters
  * Each letter will be distinct (no repeats of the same letter)
@@ -317,9 +313,6 @@ function wordScore(word) {
 
     var letterScores=letters.map(letterScore);
 
-    //var letterScores = [];
-
-    // return the total sum of the letter scores
     return letterScores.reduce(add, 0);
 }
 
